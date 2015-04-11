@@ -1,0 +1,38 @@
+<div class="container">
+  <section id="main-list">
+    <table class="table">
+      <thead id="list-header">
+        <tr>
+          <td>
+            <div class="col-md-8">
+              <a title="Partida" class="heading col-md-3">Partida<span class="caret"></span></a>
+              <a title="Arribo" class="heading col-md-3">Arribo<span class="caret"></span></a>
+              <a title="Desde" class="heading col-md-2">Desde<span class="caret"></span></a>
+              <a title="Hasta" class="heading col-md-2">Hasta<span class="caret"></span></a>
+              <p title="Aerolinea" class="heading col-md-2">Aerolinea</p>
+            </div>
+            <div class="col-md-4">
+              <p title="Precio" class="heading">Precio</p>
+            </div>
+          </td>
+        </tr>
+      </thead>
+      <tbody >
+        <tr ng-repeat="flight in flights">
+          <td>
+            <div class="col-md-8 list-data">
+              <p title="Partida" class="text-small col-md-3">{{flight.from}}</p>
+              <p title="Arribo" class="text-small col-md-3">{{flight.to}}</p>
+              <p title="Desde" class="text-small col-md-2">{{flight.validFrom}}</p>
+              <p title="Hasta" class="text-small col-md-2">{{flight.validUpTo}}</p>
+              <p title="Aerolinea" class="text-small col-md-2">{{flight.airline}}</p>
+            </div>
+            <div class="col-md-4 list-data">
+              <p title="Precio" class="text-small">{{flight.price}}  - {{flight.taxIncluded?'35% Afip incluído.':'35% Afip no incluído.'}}</p>
+            </div>
+          <td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</div>
