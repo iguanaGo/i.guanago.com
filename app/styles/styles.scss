@@ -1,12 +1,75 @@
 .nav-icon {
-	width: 50px; 
-	height: 50px;
+	width: 75px; 
+	height: 75px;
 	float: left;
 	margin-right: 10px;
+	margin-left: 22px;
 }
 
 .heading {
     color: #303233;
     font-weight: 700;
     line-height: 1;
+}
+
+.navbar {
+	padding: 10px 0px;
+	background-color: #00a2cc;
+}
+
+.navbar-header {
+	display: inline-block;
+}
+
+.navbar-default .navbar-brand {
+    color: #FFF;
+    margin-top: 10px;
+}
+
+.ig-connect {
+    float: right;
+    margin: 18px 22px 0px 0px;
+    padding: 0px;
+    height: 34px;
+    list-style: outside none none;
+}
+
+.ig-connect li {
+	position: relative;
+	display: inline-block;
+	margin: 0px 2px;
+	width: 34px;
+	height: 34px;
+	outline: medium none;
+	text-align: center;
+	line-height: 40px;
+}
+
+li .fa {
+	color: #FFF;
+	font-size: 18px;
+}
+
+li .fa:hover, li .fa:focus {
+    color: #5E5E5E;
+    background-color: transparent;
+}
+
+/* Responsive: Mobiles */
+@media screen and (max-width: 480px) {
+	.ig-connect {
+		float: none;
+		text-align: center;
+		margin: 18px 0px 0px 0px;
+	}
+
+	.navbar-header {
+		margin: 0px;
+		width: 100%;
+		text-align: center;
+	}
+
+	.center-collapse{
+		float: none;
+	}
 }
