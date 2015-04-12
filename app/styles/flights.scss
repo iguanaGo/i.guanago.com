@@ -1,0 +1,251 @@
+/* Main container */
+.fl-vm-switcher {
+	padding: 20px;
+	border: 3px solid #00a2cc;
+}
+
+/* options/select wrapper with switch anchors */
+.fl-vm-options {
+	text-align: right;
+	padding-bottom: 10px;
+	border-bottom: 3px solid #00a2cc;
+}
+
+.fl-vm-options a {
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	overflow: hidden;
+	white-space: nowrap;
+	color: #d0d0d0;
+	margin: 2px;
+}
+
+.fl-vm-options a:hover,
+.fl-vm-options a.fl-vm-selected {
+	color: #00a2cc;
+}
+
+.fl-vm-options a:before {
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	font-size: 30px;
+	text-align: center;
+	display: inline-block;
+}
+
+/* General style of switch items' list */
+
+.fl-vm-switcher ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+/* Clear eventual floats */
+.fl-vm-switcher ul:before, 
+.fl-vm-switcher ul:after { 
+	content: " "; 
+	display: table; 
+}
+
+.fl-vm-switcher ul:after { 
+	clear: both; 
+}
+
+.fl-vm-switcher ul li {
+	display: block;
+	position: relative;
+}
+
+.fl-vm-title {
+	margin: 0 0 10px 0;
+	padding: 0;
+}
+
+.fl-vm-price, .fl-vm-tax{
+	color: #c0c0c0;
+}
+
+.fl-vm-add {
+	color: #fff;
+	background: #00a2cc;
+	padding: 10px 20px;
+	border-radius: 2px;
+	margin: 20px 0 0;
+	display: inline-block;
+	transition: background 0.2s;
+}
+
+.fl-vm-add:hover {
+	color: #fff;
+	background: #02639d;
+}
+
+.fl-vm-add:before {
+	margin-right: 5px;
+}
+
+/* Common icon styles */
+.fl-vm-icon:before {
+	font-family: 'fontawesome';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+
+.fl-vm-grid:before {
+	content: "\f00a";
+}
+
+.fl-vm-list:before {
+	content: "\f00b";
+}
+
+.fl-vm-add:before {
+	content: "\f055";
+}
+
+/* Individual view mode styles */
+
+/* Large grid view */
+.fl-vm-view-grid ul {
+	text-align: center;
+}
+
+.fl-vm-view-grid ul li {
+	width: 33%;
+	text-align: center;
+	padding: 25px;
+	margin: 20px 0 20px;
+	display: inline-block;
+	vertical-align: top;	
+	border: 1px solid transparent;
+}
+
+.fl-vm-view-grid ul li:hover {
+	border: 1px solid #00A2CC;
+}
+
+.fl-vm-view-grid .fl-vm-title {
+	font-size: 2em;
+}
+
+.fl-vm-view-grid .fl-vm-details {
+	max-width: 300px;
+	margin: 0 auto;
+	margin-bottom: 20px;
+} 
+
+.fl-vm-view-grid .fl-vm-airline {
+	max-width: 300px;
+	margin: 5px auto;
+} 
+
+
+.fl-vm-view-grid .fl-vm-price {
+	margin: 0;
+	font-size: 1.5em;
+}
+
+.fl-vm-view-grid .fl-vm-tax {
+	margin-bottom: 10px;
+	font-size: 0.8em;
+}
+
+/* List view */
+.fl-vm-view-list li {
+	padding: 20px 0 60px 0;
+	white-space: nowrap;
+	border-bottom: 1px solid #00A2CC;
+}
+
+.fl-vm-view-list .fl-vm-title,
+.fl-vm-view-list .fl-vm-price,
+.fl-vm-view-list .fl-vm-tax,
+.fl-vm-view-list .fl-vm-airline, {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.fl-vm-view-list .fl-vm-title {
+	font-size: 1.3em;
+	padding: 0 10px;
+	width: 20%;
+	margin: 0;
+	white-space: normal;
+}
+
+.fl-vm-view-list .fl-vm-price {
+	font-size: 1.3em;
+	width: 15%;
+}
+.fl-vm-view-list .fl-vm-tax {
+	font-size: 1.3em;
+	font-size: 0.8em;	
+	width: 13%;
+}
+
+.fl-vm-view-list .fl-vm-airline {
+	padding: 0 15px;
+	overflow: hidden;
+	white-space: normal;
+}
+
+.fl-vm-view-list .fl-vm-details {
+	padding: 0 15px;
+	overflow: hidden;
+	white-space: normal;
+}
+
+.fl-vm-view-list .fl-vm-details  {
+	display: block;
+	width: 100%;
+	margin: 10px 0;
+}
+
+.fl-vm-view-list .fl-vm-add  {
+	margin: 0;
+	float:right;
+}
+
+.fl-vm-title .fa {
+	padding-right: 15px;
+}
+
+@media screen and (max-width: 991px) {
+	.fl-vm-view-grid ul li {
+		width: 49%;
+	}
+
+	.fl-vm-view-list .fl-vm-title,
+	.fl-vm-view-list .fl-vm-price,
+	.fl-vm-view-list .fl-vm-tax,
+	.fl-vm-view-list .fl-vm-airline {
+		margin-right: 10px;
+		width: auto;
+	}
+
+	.fl-vm-view-list .fl-vm-airline, {
+		margin-top: 10px;
+		display: block;
+	}
+}
+
+@media screen and (max-width: 680px) {
+	.fl-vm-view-list .fl-vm-tax {
+		display: block;
+		padding-left: 15px;
+	}
+}
+
+@media screen and (max-width: 40.125em) {
+	.fl-vm-view-grid ul li {
+		width: 100%;
+	}
+}

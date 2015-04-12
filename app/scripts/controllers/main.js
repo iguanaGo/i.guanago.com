@@ -8,16 +8,25 @@
  * Controller of the iguanagoApp
  */
 angular.module('iguanagoApp')
-  .controller('MainCtrl', ['$scope', 'flightService', 'destinos', function ($scope, flightService, destinos) {
+  .controller('MainCtrl', ['$scope', 'flightService', function ($scope, flightService) {
     
+    //inicializacion de vista x default
+    $scope.viewMode = 'fl-vm-view-grid';
+    $scope.viewSelected = 'grid';
+
+    $scope.getSelected = function(mode){
+      switch(mode){
+        case $scope.viewSelected:
+          return 'fl-vm-selected'
+        default:
+          return ''
+      }
+    }
 
     //Carga datos de vuelos
-    /*
+    
   	flightService.getFlights().then(function(data){
-  		$scope.flights = data;
+  		$scope.flights = data[0];
   	});
-	*/
-	console.log( destinos );
-  	$scope.flights = destinos[0];
 
   }]);

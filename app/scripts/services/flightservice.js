@@ -9,42 +9,21 @@
  */
 angular.module('iguanagoApp')
   .service('flightService', ['$http', '$q', function ($http,$q) {
+    
     //Mock de datos de vuelo
     function getMockFlightsData () {
-		var mock = [
-			{
-				from: 'Buenos Aires',
-				to: 'Miami',
-				airline: 'BOA',
-				price: 'ARS 9.593,00',
-				taxIncluded: true,
-				validFrom: '2016-02-12',
-				validUpTo: '2016-02-27'
-			},	
-			{
-				from: 'San Pablo',
-				to: 'Miami',
-				airline: 'Tam/Lan',
-				price: 'ARS 8.340,00',
-				taxIncluded: true,
-				validFrom: '2015-07-22',
-				validUpTo: '2015-08-06'
-			},	
-			{
-				from: 'Buenos Aires',
-				to: 'Bangkok',
-				airline: 'Emirates',
-				price: 'ARS 17.206,00',
-				taxIncluded: false,
-				validFrom: '2015-12-01',
-				validUpTo: '2015-12-21'
-			}
-		];
-
     	//crea la promesa a devolver
-		return $q(function(resolve, reject) {
-			resolve(mock);
-		});
+    	var tabletopResponse = $q.defer();
+    	//inicializa Tabletop y define el callback
+	    window.Tabletop.init({
+	      key: 'https://docs.google.com/spreadsheets/d/1MNkEoLahoi_6bjwi0QkU9-SkYirnI_13jaH63k2Ogok/pubhtml?gid=0&single=true',
+	      simpleSheet: true,
+	      callback: function(data, Tabletop) { tabletopResponse.resolve([data, Tabletop]);
+	      }
+	    });
+
+	    //devuleve la promesa que se resuelve en el callback de Tabletop
+	    return tabletopResponse.promise;
     }
 
     //Futura implementacion
