@@ -5,13 +5,13 @@ Where do you guana go now?
 
 ## Instalación
 ### Windows
-** Prerequisitos **
+Prerequisitos
 
 - [ruby](http://rubyinstaller.org/downloads/)
 - [nodejs y npm](http://blog.teamtreehouse.com/install-node-js-npm-windows)
 - [git](https://git-scm.herokuapp.com/download/win)
 
-** Desde consola **
+Desde consola
 ```sh
 npm update -g npm
 gem install sass compass
@@ -72,13 +72,18 @@ git push origin master
 ```
 
 # Base de datos
-** Poner las novedades arriba! **
+Poner las novedades arriba!
+
 [https://docs.google.com/spreadsheets/d/1MNkEoLahoi_6bjwi0QkU9-SkYirnI_13jaH63k2Ogok/edit#gid=0](https://docs.google.com/spreadsheets/d/1MNkEoLahoi_6bjwi0QkU9-SkYirnI_13jaH63k2Ogok/edit#gid=0)
 
 # Backend Grails
 * [https://github.com/iguanaGo/api.guanago.com](https://github.com/iguanaGo/api.guanago.com)
 * [http://api.guanago.com](http://api.guanago.com)
 * [https://api-guanago-com.herokuapp.com/](https://api-guanago-com.herokuapp.com/)
+
+TODO
+----
+-
 
 Licencia
 ----
@@ -87,7 +92,3 @@ Licencia
 Versión
 ----
 0.1
-
-TODO
-----
--
