@@ -35,5 +35,12 @@ angular
         url: "/flights",
         templateUrl: "views/flights.html",
         controller: "FlightsCtrl"
-      });
+      }
+    ).state('destinations',
+      {
+        url: "/destinations",
+        templateUrl: "views/destinations.html",
+        controller: "DestinationsCtrl"
+      }
+    );
   }]);

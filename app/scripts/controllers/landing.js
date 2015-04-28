@@ -7,6 +7,10 @@
  * # LandingCtrl
  * Controller of the iguanagoApp
  */
-angular.module('iguanagoApp').controller('LandingCtrl', ['$scope', function ($scope) {
+angular.module('iguanagoApp').controller('LandingCtrl', ['$scope', '$state', function ($scope, $state) {
     
+	$scope.goToDestinations = function(){
+		$state.go('destinations');
+	}
+
 }]);
