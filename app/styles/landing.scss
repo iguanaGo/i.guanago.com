@@ -1,0 +1,218 @@
+.navbar {
+	margin-bottom: 0px;
+}
+
+.cbp-so-scroller {
+	overflow: hidden;
+}
+
+.cbp-so-section {
+	position: relative;
+}
+
+.cbp-so-section-dark {
+    background: none repeat scroll 0% 0% #F4F4F4;
+}
+
+/* Clear floats of children */
+.cbp-so-section:before,
+.cbp-so-section:after {
+	content: " ";
+	display: table;
+}
+
+.cbp-so-section:after {
+	clear: both;
+}
+
+/* Text styling */
+.cbp-so-section h2 {
+	font-size: 5em;
+	font-weight: 300;
+	line-height: 1;
+	color: #337AB7;
+}
+
+.cbp-so-section h2 a:focus,
+.cbp-so-section h2 a:hover{
+    color: #5E5E5E;
+	text-decoration: none;
+}
+
+.cbp-so-section p {
+	font-size: 2em;
+	font-weight: 300;
+}
+
+.cbp-so-side-left h2,
+.cbp-so-side-left p {
+	margin-left: 30%;
+}
+
+.cbp-so-side-right h2,
+.cbp-so-side-right p {
+	margin-right: 30%;
+}
+
+fieldset.cbp-so-side {
+	margin-top: 35px;
+}
+
+
+.cbp-so-section input{
+    position: relative;
+    padding: 14px 10px 14px 40px;
+    border-radius: 56px;
+    border-style: solid;
+    border-color: #F4F4F4;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-size: 18px;
+}
+
+.cbp-so-section input.maxMoney{
+    display: block;
+    width: 25%;
+}
+
+.cbp-so-section input.origin{
+    display: block;
+	margin-top: 15px;
+    width: 50%;
+}
+
+.cbp-so-section input.date{
+    display: inline-block;
+	margin-top: 15px;
+    width: 25%;
+}
+
+.cbp-so-section input.search{
+    display: block;
+	margin-top: 25px;
+	padding: 14px 10px 14px 10px;
+	background-color: #00A2CC;
+	border-color: #00A2CC;
+	color: #FFF;
+    width: 25%;
+}
+
+.cbp-so-section input:hover,
+.cbp-so-section input:focus{
+    border-color: #00A2CC;
+}
+
+.cbp-so-section input.search:hover,
+.cbp-so-section input.search:focus{
+	background-color: #5E5E5E;
+	border-color: #5E5E5E;
+	color: #FFF;
+}
+
+/* Sides */
+.cbp-so-side {
+	width: 50%;
+	float: left;
+	margin: 0;
+	padding: 3em 4%;
+	overflow: hidden;
+	min-height: 450px;
+}
+
+/* Clear floats of children */
+.cbp-so-side:before,
+.cbp-so-side:after {
+	content: " ";
+	display: table;
+}
+
+.cbp-so-side:after {
+	clear: both;
+}
+
+.cbp-so-side-right {
+	text-align: left;
+}
+
+.cbp-so-side-left {
+	text-align: right;
+}
+
+.cbp-so-side-right img {
+	float: left;
+	width: 70%;
+}
+
+.cbp-so-side-left img {
+	float: right;
+	margin-top: 25px;
+	width: 70%;
+}
+
+/* Initial state (hidden or anything else) */
+.cbp-so-init .cbp-so-side {
+	opacity: 0;
+	-webkit-transition: none;
+	-moz-transition: none;
+	transition: none;
+}
+
+.cbp-so-init .cbp-so-side-left {
+	-webkit-transform: translateX(-80px);
+	-moz-transform: translateX(-80px);
+	transform: translateX(-80px);
+}
+
+.cbp-so-init .cbp-so-side-right {
+	-webkit-transform: translateX(80px);
+	-moz-transform: translateX(80px);
+	transform: translateX(80px);
+}
+
+/* Animated state */
+/* add you final states (transition) or your effects (animations) for each side */
+.cbp-so-section.cbp-so-animate .cbp-so-side-left,
+.cbp-so-section.cbp-so-animate .cbp-so-side-right {
+	-webkit-transition: -webkit-transform 0.5s, opacity 0.5s;
+	-moz-transition: -moz-transform 0.5s, opacity 0.5s;
+	transition: transform 0.5s, opacity 0.5s;
+	-webkit-transform: translateX(0px);
+	-moz-transform: translateX(0px);
+	transform: translateX(0px);
+	opacity: 1;
+}
+
+/* For example, add a delay for the right side:
+.cbp-so-section.cbp-so-animate .cbp-so-side-right {
+	-webkit-transition-delay: 0.2s;
+	-moz-transition-delay: 0.2s;
+	transition-delay: 0.2s;
+}
+*/
+
+/* Example media queries */
+
+@media screen and (max-width: 73.5em) {
+	.cbp-so-scroller {
+		font-size: 65%;
+	}
+
+	.cbp-so-section h2 {
+		margin: 0;
+	}
+
+	.cbp-so-side img {
+		max-width: 120%;
+	}
+}
+
+@media screen and (max-width: 41.125em) {
+	.cbp-so-side {
+		float: none;
+		width: 100%;
+	}
+
+	.cbp-so-side img {
+		max-width: 100%;
+	}
+}

@@ -27,8 +27,13 @@ angular
     .state('main', 
       {
         url: "/",
-        templateUrl: "views/main.html",
-        controller: "MainCtrl"
+        templateUrl: "views/landing.html",
+        controller: "LandingCtrl"
       }
-    );
+    ).state('flights',
+      {
+        url: "/flights",
+        templateUrl: "views/flights.html",
+        controller: "FlightsCtrl"
+      });
   }]);
