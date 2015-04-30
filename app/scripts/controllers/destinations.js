@@ -11,7 +11,8 @@ angular.module('iguanagoApp')
   .controller('DestinationsCtrl', ['$scope', function ($scope) {
 
 	var width = 960,
-	    height = 500;
+	    height = 500,
+        centered;
 
 	var svg = d3.select("#world-map").append("svg")
 	    .attr("width", '100%')
@@ -27,17 +28,45 @@ angular.module('iguanagoApp')
 
 	var path = d3.geo.path().projection(projection);
 
+
+    function sortByRegion(countries){
+        function camelize(str) {
+          return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function(match, index) {
+            if (+match === 0) return ""; // or if (/\s+/.test(match)) for white spaces
+            return index == 0 ? match.toLowerCase() : match.toUpperCase();
+          });
+        }
+
+        var regions = {}
+        $.each(countries.geometries, function(i,v){
+            if (regions[camelize(v.properties.subregion)] === undefined){
+                regions[camelize(v.properties.subregion)] = {
+                    type: 'GeometryCollection',
+                    geometries: []};
+            }
+            regions[camelize(v.properties.subregion)].geometries.push(v);
+        });
+        return regions;
+    }
+
 	d3.json("../resources/world.json", function(error, world) {
-	  if (error) return console.error(error);
+	    if (error) {
+            return console.error(error);
+        }
+
+        var regions = sortByRegion(world.objects.countries);
 
 	  	//Agregar paises
-		countryGroup.selectAll(".countries")
-		    .data(topojson.feature(world, world.objects.countries).features)
-		  .enter().append("path")
-		    .attr("class", function(d) { return "country " + d.id; })
-		    .attr("d", path)
-		    .on("click", clicked);;
+        $.each(regions,function(key,val){
+            var region = countryGroup.append('g').attr("id", key);
 
+            region.selectAll(".countries")
+                .data(topojson.feature(world, val).features)
+              .enter().append("path")
+                .attr("class", function(d) { return "country " + d.id; })
+                .attr("d", path)
+                .on("click", clicked);
+        })
 
         // --- Helper functions (for tweening the path)
         var lineTransition = function lineTransition(path) {
@@ -112,7 +141,30 @@ angular.module('iguanagoApp')
 
 	});
 
-	function clicked(d) {}
+    function clicked(d) {
+      var x, y, k;
+
+      if (d && centered !== d) {
+        var centroid = path.centroid(d);
+        x = centroid[0];
+        y = centroid[1];
+        k = 4;
+        centered = d;
+      } else {
+        x = width / 2;
+        y = height / 2;
+        k = 1;
+        centered = null;
+      }
+
+      svg.selectAll("path")
+          .classed("active", centered && function(d) { return d === centered; });
+
+      svg.transition()
+          .duration(750)
+          .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+          .style("stroke-width", 1.5 / k + "px");
+    }
 
 
   }]);
