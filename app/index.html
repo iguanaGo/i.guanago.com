@@ -13,12 +13,16 @@
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/flights.css">
+    <link rel="stylesheet" href="styles/landing.css">
+    <link rel="stylesheet" href="styles/destinations.css">
     <!-- endbuild -->
- 
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://d3js.org/d3.geo.projection.v0.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
     
   </head>
   <body ng-app="iguanagoApp">
@@ -92,8 +96,10 @@
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/flights.js"></script>
+        <script src="scripts/controllers/landing.js"></script>
         <script src="scripts/services/flightservice.js"></script>
+        <script src="scripts/controllers/destinations.js"></script>
         <!-- endbuild -->
 </body>
 </html>
