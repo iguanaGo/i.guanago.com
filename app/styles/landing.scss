@@ -93,7 +93,6 @@ fieldset.cbp-so-side {
 	background-color: #00A2CC;
 	border-color: #00A2CC;
 	color: #FFF;
-    width: 25%;
 }
 
 .cbp-so-section input:hover,
@@ -191,9 +190,13 @@ fieldset.cbp-so-side {
 
 /* Example media queries */
 
-@media screen and (max-width: 73.5em) {
+@media screen and (max-width: 1442px) {
 	.cbp-so-scroller {
 		font-size: 65%;
+	}
+
+	.cbp-so-side {
+		min-height: 300px;
 	}
 
 	.cbp-so-section h2 {
@@ -201,7 +204,8 @@ fieldset.cbp-so-side {
 	}
 
 	.cbp-so-side img {
-		max-width: 120%;
+		width: 90%;
+		margin-top: 0;
 	}
 }
 

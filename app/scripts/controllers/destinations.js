@@ -18,9 +18,11 @@ angular.module('iguanagoApp')
 	    .attr("width", '100%')
 	    .attr("height", height);
 
-	var countryGroup = svg.append('g').attr("class", "countries");
-	var arcGroup = svg.append('g').attr("class", "arcs");
-	var pointGroup = svg.append('g').attr("class", "points");
+    var g = svg.append("g");
+
+	var countryGroup = g.append('g').attr("class", "countries");
+	var arcGroup = g.append('g').attr("class", "arcs");
+	var pointGroup = g.append('g').attr("class", "points");
 
 	var projection = d3.geo.miller()
 	    .scale(153)
@@ -58,7 +60,7 @@ angular.module('iguanagoApp')
 
 	  	//Agregar paises
         $.each(regions,function(key,val){
-            var region = countryGroup.append('g').attr("id", key);
+            var region = countryGroup.append('g').attr("id", key).attr("class", "subregion");;
 
             region.selectAll(".countries")
                 .data(topojson.feature(world, val).features)
@@ -68,41 +70,64 @@ angular.module('iguanagoApp')
                 .on("click", clicked);
         })
 
-        // --- Helper functions (for tweening the path)
-        var lineTransition = function lineTransition(path) {
-            path.transition()
-                //NOTE: Change this number (in ms) to make lines draw faster or slower
-                .duration(4000)
-                .attrTween("stroke-dasharray", tweenDash)
-                .each("end", function(d,i) { 
-                    ////Uncomment following line to re-transition
-                    //d3.select(this).call(transition); 
-                    
-                    //We might want to do stuff when the line reaches the target,
-                    //  like start the pulsating or add a new point or tell the
-                    //  NSA to listen to this guy's phone calls
-                    //doStuffWhenLineFinishes(d,i);
-                });
-        };
-        var tweenDash = function tweenDash() {
-            //This function is used to animate the dash-array property, which is a
-            //  nice hack that gives us animation along some arbitrary path (in this
-            //  case, makes it look like a line is being drawn from point A to B)
-            var len = this.getTotalLength(),
-                interpolate = d3.interpolateString("0," + len, len + "," + len);
-
-            return function(t) { return interpolate(t); };
-        };
-
-        var links = [
-            {
-                type: "LineString",
-                    coordinates: [
-                        [ -58.381667, -34.603333 ],
-                        [ -3.716667, 40.383333 ]
-                    ]
-            },
-            {
+        var schedules = [
+            [
+                {   
+                    from: {
+                        name: "Buenos Aires",
+                        coordinates: [ -58.381667, -34.603333 ]
+                    },
+                    to: {
+                        name: "Madrid",
+                        coordinates: [ -3.716667, 40.383333 ]
+                    }
+                },
+                {   
+                    from: {
+                        name: "Madrid",
+                        coordinates: [ -3.716667, 40.383333 ]
+                    },
+                    to: {
+                        name: "Londres",
+                        coordinates: [ -0.1275, 51.507222 ]
+                    }
+                }
+            ],
+            [
+                {   
+                    from: {
+                        name: "Buenos Aires",
+                        coordinates: [ -58.381667, -34.603333 ]
+                    },
+                    to: {
+                        name: "Madrid",
+                        coordinates: [ -3.716667, 40.383333 ]
+                    }
+                },
+                {   
+                    from: {
+                        name: "Madrid",
+                        coordinates: [ -3.716667, 40.383333 ]
+                    },
+                    to: {
+                        name: "Berlin",
+                        coordinates: [ 13.383333, 52.516667 ]
+                    }
+                }
+            ],
+            [
+                {
+                    from: {
+                        name: "Buenos Aires",
+                        coordinates: [ -58.381667, -34.603333 ]
+                    },
+                    to: {
+                        name: "Nueva York",
+                        coordinates: [ -74.0059700, 40.7142700  ]
+                    }
+                }
+            ]
+            /*{
                 type: "LineString",
                     coordinates: [
                         [ -58.381667, -34.603333 ],
@@ -115,31 +140,125 @@ angular.module('iguanagoApp')
                         [ -58.381667, -34.603333 ],
                         [ -74.0059700, 40.7142700  ]
                     ]
-            }
+            }*/
         ];
 
-        // Standard enter / update 
-        var pathArcs = arcGroup.selectAll(".arc")
-            .data(links);
+        var cities = {};
 
-        //enter
-        pathArcs.enter()
-            .append("path").attr({
-                'class': 'arc'
+        $.each(schedules,function(i,schedule){
+
+            function createPath(i,schedule){
+                if (schedule[i] === undefined){
+                    return null;
+                }else{
+
+                    //Agrega las ciudades a la lista para dibujar si es necesario
+                    if (cities[schedule[i].from.name] === undefined){
+                        cities[schedule[i].from.name] = schedule[i].from.coordinates;
+                    }
+                    if (cities[schedule[i].to.name] === undefined){
+                        cities[schedule[i].to.name] = schedule[i].to.coordinates;
+                    }
+
+                    return {
+                        type: "LineString",
+                        coordinates: [
+                                schedule[i].from.coordinates,
+                                schedule[i].to.coordinates
+                            ],
+                        next: createPath(i+1,schedule)
+                    };
+                }
+            }
+
+            var line = createPath(0,schedule);
+            appendLine(line);
+        });
+
+        $.each(cities,function(name,coordinates){
+
+            var point = [{
+                type: "Point",
+                coordinates: coordinates,
+                name: name
+            }];
+
+            pointGroup.selectAll(".city")
+            .data(point)
+            .enter().append("circle", ".city")
+            .attr("r", 4)
+            .attr("transform", function(d) {
+                return "translate(" + projection([
+                  d.coordinates[0],
+                  d.coordinates[1]
+                ]) + ")";
             });
-        //update
-        pathArcs.attr({
-                //d is the points attribute for this path, we'll draw
-                //  an arc between the points using the arc function
-                d: path
-            })
-            // Comment this line to remove the transition
-            .call(lineTransition); 
 
-        //exit
-        pathArcs.exit().remove();
+            pointGroup.selectAll(".cityName")
+            .data(point)
+            .enter().append("text", ".cityName")
+            .attr("class", "cityLabel")
+            .attr("transform", function(d) {
+                return "translate(" + projection([
+                  d.coordinates[0],
+                  d.coordinates[1]
+                ]) + ")";
+            })
+            .text(function(d) { return d.name;})
+            //FIXME
+            .attr("x", function(d) { return d.name === "Londres" ? -6 : 6; })
+            .style("text-anchor", function(d) { return d.name === "Londres" ? "end" : "start"; });;
+        });
 
 	});
+
+    function appendLine(line){
+
+            // --- Helper functions (for tweening the path)
+            var lineTransition = function lineTransition(path) {
+                path.transition()
+                    //NOTE: Change this number (in ms) to make lines draw faster or slower
+                    .duration(4000)
+                    .attrTween("stroke-dasharray", tweenDash)
+                    .each("end", function(d,i) { 
+                        if(d.next !== null){
+                            appendLine(d.next);
+                        }
+                    });
+            };
+            var tweenDash = function tweenDash() {
+                //This function is used to animate the dash-array property, which is a
+                //  nice hack that gives us animation along some arbitrary path (in this
+                //  case, makes it look like a line is being drawn from point A to B)
+                var len = this.getTotalLength(),
+                    interpolate = d3.interpolateString("0," + len, len + "," + len);
+
+                return function(t) { return interpolate(t); };
+            };
+
+            // Standard enter / update 
+            var arc = arcGroup.append('g').attr("class", "arc");
+
+            var pathArcs = arc.selectAll(".arc")
+                .data([line]);
+
+            //enter
+            pathArcs.enter()
+                .append("path").attr({
+                    'class': 'arc'
+                });
+            //update
+            pathArcs.attr({
+                    //d is the points attribute for this path, we'll draw
+                    //  an arc between the points using the arc function
+                    d: path
+                })
+                // Comment this line to remove the transition
+                .call(lineTransition); 
+
+            //exit
+            pathArcs.exit().remove();
+    }
 
     function clicked(d) {
       var x, y, k;
@@ -157,10 +276,10 @@ angular.module('iguanagoApp')
         centered = null;
       }
 
-      svg.selectAll("path")
+      g.selectAll("path")
           .classed("active", centered && function(d) { return d === centered; });
 
-      svg.transition()
+      g.transition()
           .duration(750)
           .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
           .style("stroke-width", 1.5 / k + "px");
