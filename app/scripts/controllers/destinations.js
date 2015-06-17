@@ -10,12 +10,17 @@
 angular.module('iguanagoApp')
   .controller('DestinationsCtrl', ['$scope', function ($scope) {
 
-	var width = 960,
-	    height = 500,
+    var margin = {top: 10, left: 10, bottom: 10, right: 10},
+        width = parseInt(d3.select('#world-map').style('width')),
+        width = width - margin.left - margin.right,
+        mapRatio = .5,
+	    height = width * mapRatio,
         centered;
 
+    d3.select(window).on('resize', resize);
+
 	var svg = d3.select("#world-map").append("svg")
-	    .attr("width", '100%')
+	    .attr("width", width)
 	    .attr("height", height);
 
     var g = svg.append("g");
@@ -25,11 +30,49 @@ angular.module('iguanagoApp')
 	var pointGroup = g.append('g').attr("class", "points");
 
 	var projection = d3.geo.miller()
-	    .scale(153)
+	    .scale(width/7)
 	    .translate([width / 2, height / 1.5]);
 
 	var path = d3.geo.path().projection(projection);
 
+    $scope.origin = {
+            country: 'ARG',
+            name: "Buenos Aires",
+            coordinates: [ -58.381667, -34.603333 ]
+        };
+
+    $scope.cities = [
+        {
+            country: 'DEU',
+            name: "Berlin",
+            coordinates: [ 13.383333, 52.516667 ]
+        },
+        {
+            country: 'ARG',
+            name: "Puerto Iguazu",
+            coordinates: [ -54.580278, -25.610833 ]
+        },
+        {
+            country: 'USA',
+            name: "Nueva York",
+            coordinates: [ -74.0059700, 40.7142700  ]
+        },
+        {
+            country: 'USA',
+            name: "Los Angeles",
+            coordinates: [ -118.25, 34.05  ]
+        },
+        {
+            country: 'ESP',
+            name: "Madrid",
+            coordinates: [ -3.716667, 40.383333 ]
+        },
+        {
+            country: 'GBR',
+            name: "Londres",
+            coordinates: [ -0.1275, 51.507222 ]
+        }
+    ];
 
     function sortByRegion(countries){
         function camelize(str) {
@@ -143,9 +186,11 @@ angular.module('iguanagoApp')
             }*/
         ];
 
-        var cities = {};
+        $.each($scope.cities,function(i,city){
+            countryGroup.selectAll('.'+city.country).style("fill", "#00A2CC");
+        });
 
-        $.each(schedules,function(i,schedule){
+        /*$.each(schedules,function(i,schedule){
 
             function createPath(i,schedule){
                 if (schedule[i] === undefined){
@@ -208,7 +253,7 @@ angular.module('iguanagoApp')
             //FIXME
             .attr("x", function(d) { return d.name === "Londres" ? -6 : 6; })
             .style("text-anchor", function(d) { return d.name === "Londres" ? "end" : "start"; });;
-        });
+        });*/
 
 	});
 
@@ -285,5 +330,24 @@ angular.module('iguanagoApp')
           .style("stroke-width", 1.5 / k + "px");
     }
 
+
+    function resize() {
+        // adjust things when the window size changes
+        width = parseInt(d3.select('#world-map').style('width'));
+        width = width - margin.left - margin.right;
+        height = width * mapRatio;
+
+        // update projection
+        projection
+            .translate([width / 2, height / 1.5])
+            .scale(width/7);
+
+        // resize the map container
+        svg.style('width', width + 'px');
+        svg.style('height', height + 'px');
+
+        // resize the map
+        countryGroup.selectAll('.country').attr('d', path);
+    }
 
   }]);
