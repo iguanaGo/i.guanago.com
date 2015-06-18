@@ -44,31 +44,37 @@ angular.module('iguanagoApp')
     $scope.cities = [
         {
             country: 'DEU',
+            countryName: 'Alemania',
             name: "Berlin",
             coordinates: [ 13.383333, 52.516667 ]
         },
         {
             country: 'ARG',
+            countryName: 'Argentina',
             name: "Puerto Iguazu",
             coordinates: [ -54.580278, -25.610833 ]
         },
         {
             country: 'USA',
+            countryName: 'Estados Unidos',
             name: "Nueva York",
             coordinates: [ -74.0059700, 40.7142700  ]
         },
         {
             country: 'USA',
+            countryName: 'Estados Unidos',
             name: "Los Angeles",
             coordinates: [ -118.25, 34.05  ]
         },
         {
             country: 'ESP',
+            countryName: 'España',
             name: "Madrid",
             coordinates: [ -3.716667, 40.383333 ]
         },
         {
             country: 'GBR',
+            countryName: 'Reino Unido',
             name: "Londres",
             coordinates: [ -0.1275, 51.507222 ]
         }
